@@ -45,7 +45,12 @@ func (r *StructReader) Unmarshall() (*ReaderResult, error) {
 
 	// Loop throw all rows
 	rowIndex := 0
+	preindex := 0
 	for rows.Next() {
+		if preindex < r.Reader.Axis.Row-1 {
+			preindex++
+			continue
+		}
 		row, err := rows.Columns()
 		if err != nil {
 			break
